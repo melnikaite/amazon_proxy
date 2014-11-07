@@ -8,3 +8,8 @@ group :development do
   gem 'sinatra-contrib'
   gem 'byebug'
 end
+
+group :test, :development do
+  gem 'rspec'
+  gem 'rack-test'
+end

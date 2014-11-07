@@ -63,10 +63,10 @@ helpers do
 
   def respond_to_action(params:)
     begin
-      result = if params['id']
-        ec2.send(params['collection']).send(:[], params['id']).send(params['action'], params['options'].to_aws_options)
+      if params['id']
+        result = ec2.send(params['collection']).send(:[], params['id']).send(params['action'], params['options'].to_aws_options)
       else
-        ec2.send(params['collection']).send(params['action'], *params['options'].to_aws_options)
+        result = ec2.send(params['collection']).send(params['action'], *params['options'].to_aws_options)
       end
 
       [200, MultiJson.encode({id: result.id}, pretty: curl?)]
