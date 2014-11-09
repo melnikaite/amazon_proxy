@@ -1,8 +1,14 @@
 helpers do
+  # Check if request was sent from curl
+  # @return [Boolean]
   def curl?
     !!(request.user_agent =~ /curl/)
   end
 
+  # @param [String] collection
+  # @param [String] set
+  # @param [Array] filters
+  # @return [Array] status code and JSON with collection
   def respond_with_collection(collection:, set:, filters:)
     begin
       options = {}
@@ -16,6 +22,8 @@ helpers do
     end
   end
 
+  # @param [Hash] params
+  # @return [Array] status code and JSON with result
   def respond_to_action(params:)
     begin
       if params['id']
@@ -37,6 +45,7 @@ helpers do
     end
   end
 
+  # @return [AWS::EC2]
   def ec2
     AWS::EC2.new(
       region: request.env['HTTP_REGION'],

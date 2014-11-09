@@ -1,4 +1,6 @@
 class Array
+  # Converts recursively keys to symbols and number values to integer
+  # @return [Array]
   def to_aws_options
     self.map do |option|
       result = {}
