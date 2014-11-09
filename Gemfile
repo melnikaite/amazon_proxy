@@ -6,10 +6,10 @@ gem 'aws-sdk'
 
 group :development do
   gem 'sinatra-contrib'
-  gem 'byebug'
 end
 
 group :test, :development do
+  gem 'byebug'
   gem 'rspec'
   gem 'rack-test'
 end
