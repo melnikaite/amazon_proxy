@@ -27,4 +27,17 @@ RSpec.describe 'request', feature: true do
     expect(last_response.status).to eq 200
     expect(JSON.parse last_response.body).to eq('id' => 'vol-123')
   end
+
+  it 'to check existence of snapshot should return true' do
+    allow_any_instance_of(AWS::EC2::Snapshot).to receive(:exists?).and_return(true)
+    get '/snapshots/exists%3F', {id: 'qwerty'}, headers
+    expect(last_response.status).to eq 200
+    expect(JSON.parse(last_response.body, :quirks_mode => true)).to eq(true)
+  end
+
+  it 'without credentials should return error' do
+    get '/images'
+    expect(last_response.status).to eq 500
+    expect(JSON.parse last_response.body).to have_key('error')
+  end
 end
