@@ -11,22 +11,29 @@ helpers do
       results = ec2.send(collection).filtered_request(:"describe_#{collection}", options).send("#{set}_set").to_a
 
       [200, MultiJson.encode(results, pretty: curl?)]
-    rescue Exception => msg
-      [500, msg]
+    rescue => msg
+      [500, MultiJson.encode({error: msg, backtrace: msg.backtrace})]
     end
   end
 
   def respond_to_action(params:)
     begin
       if params['id']
-        result = ec2.send(params['collection']).send(:[], params['id']).send(params['action'], params['options'].to_aws_options)
+        item = ec2.send(params['collection']).send(:[], params['id'])
+        if params['options']
+          result = item.send(params['action'], *params['options'].to_aws_options)
+        else
+          result = item.send(params['action'])
+        end
+
+        [200, MultiJson.encode(result, pretty: curl?)]
       else
         result = ec2.send(params['collection']).send(params['action'], *params['options'].to_aws_options)
-      end
 
-      [200, MultiJson.encode({id: result.id}, pretty: curl?)]
-    rescue Exception => msg
-      [500, msg]
+        [200, MultiJson.encode({id: result.id}, pretty: curl?)]
+      end
+    rescue => msg
+      [500, MultiJson.encode({error: msg, backtrace: msg.backtrace})]
     end
   end
 

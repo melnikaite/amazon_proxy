@@ -7,6 +7,8 @@ require_relative 'helpers/array_helpres'
 require_relative 'routes'
 
 if development?
-  require 'sinatra/reloader'
   require 'byebug'
+  require 'sinatra/reloader'
+  also_reload 'routes'
+  also_reload 'helpers/*.rb'
 end
