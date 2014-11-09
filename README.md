@@ -21,3 +21,9 @@ Examples:
 `curl -i 'localhost:4567/volumes' -H 'Region: eu-central-1' -H 'Access-Key-Id: AKIAJXVQTP6DZL3LLFVQ' -H 'Secret-Access-Key: uCFyNr9NrYLmxrUFTBQ1quwVUFjQ8yaBeElkhuG5' -X GET`
 
 `curl -i 'localhost:4567/snapshots' -H 'Region: eu-central-1' -H 'Access-Key-Id: AKIAJXVQTP6DZL3LLFVQ' -H 'Secret-Access-Key: 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' -X GET`
+
+Run:
+====
+`chmod +x app.rb`
+
+`./app.rb`
